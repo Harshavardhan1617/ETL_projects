@@ -1,14 +1,14 @@
 import sqlalchemy
 import pandas as pd
-import sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker
 import requests
 import json
-from datetime import datetime
+import datetime
 import sqlite3
 
 DATABASE_LOCATION = "/mnt/e/ETL_projects/spotify-etl/played_tracks.sqlite"
-USER_ID = ""
-TOKEN = ""
+USER_ID = "harsha"
+TOKEN = "BQCChc0wpVUIMBnfPBWlWP_riqA4kaB1mT_KjlPYK73WM92iKdDAYc2fo150UIMqQEel7NYD7gyL4"
 
 def check_data_validity(df: pd.DataFrame) -> bool:
     #check for empty dataframe
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS my_played_tracks(
 """
 
 cursor.execute(sql_query)
-print(opened database success)
+print("opened database success")
 
 try:
     song_df.to_sql("my_played_tracks", engine, index=False, if_exists='append')
