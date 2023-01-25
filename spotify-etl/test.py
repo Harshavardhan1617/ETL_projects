@@ -1,9 +1,9 @@
 import sqlalchemy
 import pandas as pd
-import sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker
 import requests
 import json
-from datetime import datetime
+import datetime
 import sqlite3
 
 DATABASE_LOCATION = "/mnt/e/ETL_projects/spotify-etl/played_tracks.sqlite"
