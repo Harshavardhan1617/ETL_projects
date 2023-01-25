@@ -81,4 +81,34 @@ song_dict = {
 song_df = pd.DataFrame(song_dict, columns = ["song_name", "artist_name", "played_at", "timestamp"])
 
 #validate
+if check_if_valid_data(song_df):
+    print("data is valid, proceeding to load stage")
+
+#Load
+engine = sqlalchemy.create_engine(DATABASE_LOCATION)
+conn = sqlite3.connect('played_tracks.sqlite')
+cursor = conn.cursor()
+
+sql_query = """
+CREATE TABLE IF NOT EXISTS my_played_tracks(
+    song_name VARCHAR(200),
+    artist_name VARCHAR(200),
+    played_at VARCHAR(200),
+    timestamp VARCHAR(200),
+    CONSTRAINT primary_key_constraint PRIMARY KEY (played_at)
+)
+"""
+
+cursor.execute(sql_query)
+print(opened database success)
+
+try:
+    song_df.to_sql("my_played_tracks", engine, index=False, if_exists='append')
+except:
+    print("Data already exists in the database")
+
+conn.close()
+print("database closed")
+
+
 
