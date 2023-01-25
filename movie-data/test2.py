@@ -26,7 +26,8 @@ tweets_df = twint_to_pd(["conversation_id","tweet", "username", "date", "user_id
 #tweets_df.to_csv('tweets.csv', index = False)
 
 df = tweets_df
-df.loc[:, 'temp'] = df['tweet'].str.split("#IMDb", expand=True)[1]
-df.drop(columns = ['temp'], inplace = True)
+df.loc[:, 'tweet'] = df['tweet'].str.split("#IMDb", expand=True)[0][:-1]
+# print("\n\n\n\n My Answer is ---------------> " , df.iloc[6])
+# df.drop(columns = ['temp'], inplace = True)
 # df[['movie_title','year','rating']] = df.loc[:, 'tweet'].str.extract(r'rated (.*) \((.*)\) (.*)', expand=True)
 df.to_csv('tweets2.csv', index = False)

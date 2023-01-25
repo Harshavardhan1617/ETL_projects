@@ -16,7 +16,7 @@ def check_if_valid_data(df: pd.DataFrame) -> bool:
         return False
 
     #Primary key check
-    if df.id.is_unique:
+    if pd.series(df['conversation_id']).is_unique:
         pass
     else:
         raise Exception("Primary key check violated")
@@ -27,35 +27,36 @@ def check_if_valid_data(df: pd.DataFrame) -> bool:
 
 
 if __name__ == "__main__":
+
         #extract
-
-    c = twint.Config()
-    c.Search = "I rated* /10 #IMDb"
-    c.Custom = ["id", "username", "user_id", "tweet", "likes_count", "created_at", "date"]
-
-
-    # set the date range to be from yesterday morning to yesterday night
-    yesterday_morning = datetime.datetime.now() - datetime.timedelta(days=2)
-    yesterday_morning = yesterday_morning.strftime("%Y-%m-%d 00:00:00")
-    yesterday_night = datetime.datetime.now() - datetime.timedelta(days=2)
-    yesterday_night = yesterday_night.strftime("%Y-%m-%d 23:59:59")
-
-    c.Since = yesterday_morning
-    c.Until = yesterday_night
-
-    #c.Format = "id: {id}, created_at: {created_at}, tweet: {tweet}, user_id: {user_id}, likes_count: {likes_count}"
-    c.Store_object = True
-
-    twint.run.Search(c)
+        import twint
+        import pandas as pd
+        import datetime
 
 
-    tweets_list = twint.output.tweets_list
-    df = pd.DataFrame(tweets_list)
+        c = twint.Config()
+        c.Search = "I rated* /10 #IMDb"
+        c.Custom = ["conversation_id", "created_at","tweet", "username", "date", "user_id"]
 
-    #print(df)
+        # set the date range to be from yesterday morning to yesterday night
+        yesterday_morning = datetime.datetime.now() - datetime.timedelta(days=2)
+        yesterday_morning = yesterday_morning.strftime("%Y-%m-%d 00:00:00")
+        yesterday_night = datetime.datetime.now() - datetime.timedelta(days=2)
+        yesterday_night = yesterday_night.strftime("%Y-%m-%d 23:59:59")
+
+        c.Since = yesterday_morning
+        c.Until = yesterday_night
+        c.Pandas = True
+
+        twint.run.Search(c)
+
+        def twint_to_pd(columns):
+            return twint.output.panda.Tweets_df[columns]
+
+        tweets_df = twint_to_pd(["conversation_id","tweet", "username", "date", "user_id"])
 
     # Validate
-    if check_if_valid_data(df):
+    if check_if_valid_data(tweets_df):
         print("Data valid, proceed to Load stage")
 
     # Load
@@ -79,7 +80,7 @@ if __name__ == "__main__":
 
 
     cursor.execute(sql_query)
-    print("Opened database successfully")
+        print("Opened database successfully")
 
     try:
         df.to_sql("tweets", engine, index=False, if_exists='append')
