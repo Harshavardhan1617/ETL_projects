@@ -1,0 +1,51 @@
+aiodns==3.0.0
+aiohttp==3.7.0
+aiohttp-socks==0.4.1
+async-timeout==3.0.1
+attrs==22.2.0
+beautifulsoup4==4.11.1
+brotlipy==0.7.0
+cchardet==2.1.7
+certifi==2021.10.8
+cffi @ file:///opt/conda/conda-bld/cffi_1642701102775/work
+chardet==3.0.4
+charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
+cinemagoer==2022.12.27
+colorama @ file:///tmp/build/80754af9/colorama_1607707115595/work
+conda==4.12.0
+conda-content-trust @ file:///tmp/build/80754af9/conda-content-trust_1617045594566/work
+conda-package-handling @ file:///tmp/build/80754af9/conda-package-handling_1649105784853/work
+cryptography @ file:///tmp/build/80754af9/cryptography_1639414572950/work
+dataclasses==0.6
+elastic-transport==8.4.0
+elasticsearch==8.6.0
+fake-useragent==1.1.1
+geographiclib==2.0
+geopy==2.3.0
+googletransx==2.4.2
+greenlet==2.0.1
+idna @ file:///tmp/build/80754af9/idna_1637925883363/work
+IMDbPY==2022.7.9
+importlib-resources==5.10.2
+lxml==4.9.2
+multidict==6.0.4
+numpy==1.24.1
+pandas==1.5.2
+pycares==4.3.0
+pycosat==0.6.3
+pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
+pyOpenSSL @ file:///opt/conda/conda-bld/pyopenssl_1643788558760/work
+PySocks @ file:///tmp/build/80754af9/pysocks_1605305812635/work
+python-dateutil==2.8.2
+pytz==2022.7.1
+requests @ file:///opt/conda/conda-bld/requests_1641824580448/work
+ruamel-yaml-conda @ file:///tmp/build/80754af9/ruamel_yaml_1616016711199/work
+schedule==1.1.0
+six @ file:///tmp/build/80754af9/six_1644875935023/work
+soupsieve==2.3.2.post1
+SQLAlchemy==1.4.46
+tqdm @ file:///opt/conda/conda-bld/tqdm_1647339053476/work
+twint @ file:///mnt/e/ETL_projects/movie-data/twint
+urllib3 @ file:///opt/conda/conda-bld/urllib3_1643638302206/work
+yarl==1.8.2
+zipp==3.11.0
