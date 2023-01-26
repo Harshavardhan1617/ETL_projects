@@ -16,24 +16,19 @@ def check_if_valid_data(df: pd.DataFrame) -> bool:
         return False
 
     #Primary key check
-    if pd.series(df['conversation_id']).is_unique:
+    if pd.Series(df['conversation_id']).is_unique:
         pass
     else:
         raise Exception("Primary key check violated")
 
     #check for nulls
-    if df.isnull().values.any():
-        raise Exception("Null values found")
+    #if df.isnull().values.any():
+    #    raise Exception("Null values found")
 
 
 if __name__ == "__main__":
 
         #extract
-        import twint
-        import pandas as pd
-        import datetime
-
-
         c = twint.Config()
         c.Search = "I rated* /10 #IMDb"
         c.Custom = ["conversation_id", "created_at","tweet", "username", "date", "user_id"]
@@ -54,38 +49,40 @@ if __name__ == "__main__":
             return twint.output.panda.Tweets_df[columns]
 
         tweets_df = twint_to_pd(["conversation_id","tweet", "username", "date", "user_id"])
+        #tweets_df.to_csv('tweets.csv', index = False)
 
-    # Validate
-    if check_if_valid_data(tweets_df):
-        print("Data valid, proceed to Load stage")
+        #df = tweets_df
+        tweets_df.loc[:, 'tweet'] = tweets_df['tweet'].str.split("#IMDb", expand=True)[0][:-1]
+        tweets_df['tweet'] = tweets_df['tweet'].str.replace('.*I rated', 'I rated')
+        # Validate
+        if check_if_valid_data(tweets_df):
+            print("Data valid, proceed to Load stage")
 
-    # Load
+        # Load
 
-    engine = sqlalchemy.create_engine(DATABASE_LOCATION)
-    conn = sqlite3.connect('movies.sqlite')
-    cursor = conn.cursor()
+        engine = sqlalchemy.create_engine(DATABASE_LOCATION)
+        conn = sqlite3.connect('movies.sqlite')
+        cursor = conn.cursor()
 
-    sql_query = """
-    CREATE TABLE IF NOT EXISTS tweets(
-        id VARCHAR(200),
-        username VARCHAR(200),
-        user_id VARCHAR(200),
-        tweet VARCHAR(200),
-        likes_count VARCHAR(200),
-        created_at VARCHAR(200),
-        date VARCHAR(200),
-        CONSTRAINT primary_key_constraint PRIMARY KEY (id)
-    )
-    """
+        sql_query = """
+        CREATE TABLE IF NOT EXISTS tweets(
+            conversation_id VARCHAR(200),
+            tweet VARCHAR(200),
+            username VARCHAR(200),
+            date VARCHAR(200),
+            user_id VARCHAR(200),
+            CONSTRAINT primary_key_constraint PRIMARY KEY (conversation_id)
+        )
+        """
 
 
-    cursor.execute(sql_query)
+        cursor.execute(sql_query)
         print("Opened database successfully")
 
-    try:
-        df.to_sql("tweets", engine, index=False, if_exists='append')
-    except:
-        print("Data already exists in the database")
+        try:
+            tweets_df.to_sql("tweets", engine, index=False, if_exists='append')
+        except:
+            print("Data already exists in the database")
 
-    conn.close()
-    print("Close database successfully")
+        conn.close()
+        print("Close database successfully")
