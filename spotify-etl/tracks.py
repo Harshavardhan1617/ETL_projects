@@ -10,7 +10,7 @@ import sqlite3
 
 DATABASE_LOCATION = "sqlite:///played_tracks.sqlite"
 USER_ID = "harsha"
-TOKEN = "BQBgFO-vKlZOC0Nf2DMmYrxNAtB1FBkKj79GZTAYib4stHDtyIPj8JZ4s4AKhNGy-9p19aleSh-ejoNG3CWNlC_7Y4OINh33rn-GwgZpZsCimL2oKOhgur7HLpWCAL2dJ_x0hHNBfKtgjaoWx0JWBykCCtgGUCdTLzNRd7XLsW37hJMnd4xPMijROWAHFbOFvPkA9A"
+TOKEN = "BQAcriub9f67uit1MgORKx2A8NhZnUhistPp63CKdEl_Xd4Sq_FcbxvyPCyu2yKZIp1aCnVfSp79f4bz-tuxJdS31lS6YlaQ6w4a1EM7RawuUS-jkCrK5llpcyNETEYOjN11uC9HCQjdCtMwG5n2p2yWsvZk8-ayp8uHZJhf1UsAYcaz8aoAz6t9u2Uc7KPoq3Gepg"
 
 def check_if_valid_data(df: pd.DataFrame) -> bool:
     # Check if dataframe is empty
